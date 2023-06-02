@@ -19,6 +19,7 @@ const getDesignation = (email) => {
 exports.login = async (req, res) => {
   try{
     const { token } = req.body;
+    console.log(token);
     if (!token) {
       return res.status(400).json({
         status: 'fail',
@@ -27,7 +28,7 @@ exports.login = async (req, res) => {
     }
 
     const response = await axios.get(
-      `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}`,
+      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +45,7 @@ exports.login = async (req, res) => {
       currentUser = await User.create({
         email,
         name,
-        picture,
+        image: picture,
         designation: getDesignation(email),
       });
       await currentUser.save();
@@ -67,6 +68,7 @@ exports.login = async (req, res) => {
     })
   }
   catch(err){
+    console.log(err);
     res.status(400).json({
       status: 'fail',
       message: err,

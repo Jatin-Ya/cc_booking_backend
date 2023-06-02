@@ -5,7 +5,10 @@ const requestSchema = new mongoose.Schema({
   description : { type: String, required: true },
   date : { type: Date, default: Date.now },
   status : { type: String, default: 'Pending' },
-  // user : { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  user : { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+   },
   beginning_time : { type: Date, required: true },
   ending_time : { type: Date, required: true },
 });
